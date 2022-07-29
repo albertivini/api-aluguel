@@ -8,6 +8,8 @@ export class AuthController {
 
   @Post()
   login(@Body() { email, password }: LoginDto) {
-    this.authService.login({ email, password });
+    const response = this.authService.login({ email, password });
+
+    return response;
   }
 }
