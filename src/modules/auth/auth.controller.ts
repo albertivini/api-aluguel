@@ -1,4 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { loginSchema } from 'src/schemas/LoginSchema';
+import { schemaValidator } from 'src/utils/schemaValidator';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/loginDto';
 
@@ -7,8 +9,10 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post()
-  login(@Body() { email, password }: LoginDto) {
-    const response = this.authService.login({ email, password });
+  login(@Body() login: LoginDto) {
+    const body = schemaValidator(login, loginSchema) as LoginDto;
+
+    const response = this.authService.login(body);
 
     return response;
   }
