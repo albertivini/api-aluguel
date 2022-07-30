@@ -1,6 +1,6 @@
 export interface Rent {
   id?: string;
-  vehicle_id: string;
-  user_id: string;
+  vehicleId: string;
+  userId: string;
   isRented?: boolean;
 }

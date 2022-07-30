@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/users/interfaces/User';
+import { User } from 'src/modules/users/interfaces/User';
 import { Login } from './interfaces/Login';
 import bcrypt from 'bcrypt';
 import { sign } from 'jsonwebtoken';

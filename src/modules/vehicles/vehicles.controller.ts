@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateVehicleDto } from 'src/vehicles/dtos/createVehicleDto';
+import { CreateVehicleDto } from 'src/modules/vehicles/dtos/createVehicleDto';
 import { VehiclesService } from './vehicles.service';
 import { schemaValidator } from 'src/utils/schemaValidator';
 import { createVehicleSchema } from 'src/schemas/createVehicleSchema';

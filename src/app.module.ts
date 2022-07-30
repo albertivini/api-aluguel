@@ -4,10 +4,10 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { VehiclesModule } from './vehicles/vehicles.module';
-import { RentsModule } from './rents/rents.module';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { VehiclesModule } from './modules/vehicles/vehicles.module';
+import { RentsModule } from './modules/rents/rents.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { LoginMiddleware } from './middlewares/login.middleware';
 import { AdminMiddleware } from './middlewares/admin.middleware';
 

@@ -6,32 +6,32 @@ import { Rent } from './interfaces/Rent';
 export class RentsService {
   private rents: Rent[] = [];
 
-  create({ vehicle_id, user_id }: Rent) {
+  create({ vehicleId, userId }: Rent) {
     const vehicle = this.rents.find(
-      (rent) => rent.vehicle_id === vehicle_id && rent.isRented === true,
+      (rent) => rent.vehicleId === vehicleId && rent.isRented === true,
     );
 
     if (vehicle) throw new Error();
 
     const user = this.rents.find(
-      (rent) => rent.user_id === user_id && rent.isRented === true,
+      (rent) => rent.userId === userId && rent.isRented === true,
     );
 
     if (user) throw new Error();
 
     const rent: Rent = {
       id: randomUUID(),
-      vehicle_id,
-      user_id,
+      vehicleId,
+      userId,
       isRented: true,
     };
 
     this.rents.push(rent);
   }
 
-  devolution({ vehicle_id, user_id }: Rent) {
+  devolution({ vehicleId, userId }: Rent) {
     const rental = this.rents.find(
-      (rent) => rent.user_id === user_id && rent.vehicle_id === vehicle_id,
+      (rent) => rent.userId === userId && rent.vehicleId === vehicleId,
     );
 
     if (!rental) throw new Error();
