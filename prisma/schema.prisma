@@ -9,3 +9,34 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String   @id @default(uuid())
+  email    String   @unique
+  password String
+  isAdmin  Boolean
+  Rental   Rental[]
+
+  @@map("users")
+}
+
+model Vehicle {
+  id       String   @id @default(uuid())
+  name     String
+  brand    String
+  isRented Boolean
+  Rental   Rental[]
+
+  @@map("vehicles")
+}
+
+model Rental {
+  id        String  @id @default(uuid())
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+  vehicleId String
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  isRented  Boolean
+
+  @@map("rentals")
+}
