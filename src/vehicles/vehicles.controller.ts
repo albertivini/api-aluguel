@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreateVehicleDto } from 'src/vehicles/dtos/createVehicleDto';
 import { VehiclesService } from './vehicles.service';
+import { schemaValidator } from 'src/utils/schemaValidator';
+import { createVehicleSchema } from 'src/schemas/createVehicleSchema';
 
 @Controller('vehicles')
 export class VehiclesController {
@@ -13,6 +15,11 @@ export class VehiclesController {
 
   @Post()
   create(@Body() createVehicle: CreateVehicleDto) {
-    this.vehiclesService.create(createVehicle);
+    const body = schemaValidator(
+      createVehicle,
+      createVehicleSchema,
+    ) as CreateVehicleDto;
+
+    this.vehiclesService.create(body);
   }
 }
