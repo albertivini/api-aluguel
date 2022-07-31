@@ -10,8 +10,7 @@ import { CreateVehicleDto } from './dtos/createVehicleDto';
 import { VehiclesService } from './vehicles.service';
 import { schemaValidator } from '../../utils/schemaValidator';
 import { createVehicleSchema } from '../../schemas/createVehicleSchema';
-import { ApiHeader, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
-import { swaggerResponse } from 'src/constants/swaggerResponse';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('vehicles')
 @Controller('vehicles')
