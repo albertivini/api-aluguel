@@ -1,41 +1,59 @@
 import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'crypto';
+import { PrismaClient } from '@prisma/client';
 import { Rent } from './interfaces/Rent';
 
 @Injectable()
 export class RentsService {
-  private rents: Rent[] = [];
+  constructor(private prisma: PrismaClient) {}
 
-  create({ vehicleId, userId }: Rent) {
-    const vehicle = this.rents.find(
-      (rent) => rent.vehicleId === vehicleId && rent.isRented === true,
-    );
+  async create({ vehicleId, userId }: Rent): Promise<void> {
+    const vehicle = await this.prisma.rental.findFirst({
+      where: {
+        vehicleId,
+        isRented: true,
+      },
+    });
 
-    if (vehicle) throw new Error();
+    if (vehicle) throw new Error('Vehicle is already rented');
 
-    const user = this.rents.find(
-      (rent) => rent.userId === userId && rent.isRented === true,
-    );
+    const user = await this.prisma.rental.findFirst({
+      where: {
+        userId,
+        isRented: true,
+      },
+    });
 
-    if (user) throw new Error();
+    if (user) throw new Error('There is already a rental car for the user');
 
-    const rent: Rent = {
-      id: randomUUID(),
-      vehicleId,
-      userId,
-      isRented: true,
-    };
-
-    this.rents.push(rent);
+    await this.prisma.rental.create({
+      data: {
+        userId,
+        vehicleId,
+        isRented: true,
+      },
+    });
   }
 
-  devolution({ vehicleId, userId }: Rent) {
-    const rental = this.rents.find(
-      (rent) => rent.userId === userId && rent.vehicleId === vehicleId,
-    );
+  async devolution({ vehicleId, userId }: Rent): Promise<void> {
+    const rental = await this.prisma.rental.findFirst({
+      where: {
+        userId,
+        vehicleId,
+        isRented: true,
+      },
+    });
 
-    if (!rental) throw new Error();
+    if (!rental) throw new Error('Does not exist rented car to this user');
 
     rental.isRented = false;
+
+    await this.prisma.rental.update({
+      data: {
+        isRented: false,
+      },
+      where: {
+        id: rental.id,
+      },
+    });
   }
 }

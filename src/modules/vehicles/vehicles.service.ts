@@ -1,19 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'crypto';
+import { PrismaClient } from '@prisma/client';
 import { Vehicle } from './interfaces/Vehicle';
 
 @Injectable()
 export class VehiclesService {
-  private vehicles: Vehicle[] = [];
+  constructor(private prisma: PrismaClient) {}
 
-  findAll(): Vehicle[] {
-    return this.vehicles;
+  async findAll(): Promise<Vehicle[]> {
+    const vehicles = await this.prisma.vehicle.findMany();
+    return vehicles;
   }
 
-  create(vehicle: Vehicle): void {
-    vehicle.id = randomUUID();
-    vehicle.isRented = false;
-
-    this.vehicles.push(vehicle);
+  async create({ brand, name }: Vehicle): Promise<void> {
+    await this.prisma.vehicle.create({
+      data: {
+        name,
+        brand,
+        isRented: false,
+      },
+    });
   }
 }
