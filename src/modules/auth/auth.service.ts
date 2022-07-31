@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Login } from './interfaces/Login';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { PrismaService } from '../../prisma/prisma.service';
 
@@ -15,11 +15,11 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new Error('User does not exists');
+    if (!user) throw new Error('Incorrect user or password');
 
     const comparedPassword = bcrypt.compareSync(password, user.password);
 
-    if (!comparedPassword) throw new Error('');
+    if (!comparedPassword) throw new Error('Incorrect user or password');
 
     const token = sign(
       {

@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { createUserSchema } from '../../schemas/createUserSchema';
 import { schemaValidator } from '../../utils/schemaValidator';
 import { CreateUserDto } from './dtos/createUserDto';
@@ -10,8 +16,20 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUser: CreateUserDto) {
-    const body = schemaValidator(createUser, createUserSchema) as CreateUserDto;
+    try {
+      const body = schemaValidator(
+        createUser,
+        createUserSchema,
+      ) as CreateUserDto;
 
-    await this.usersService.create(body);
+      await this.usersService.create(body);
+    } catch (err) {
+      throw new HttpException(
+        {
+          error: err.message,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

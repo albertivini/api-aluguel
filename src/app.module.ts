@@ -11,6 +11,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { LoginMiddleware } from './middlewares/login.middleware';
 import { AdminMiddleware } from './middlewares/admin.middleware';
 import { PrismaService } from './prisma/prisma.service';
+import { VehiclesController } from './modules/vehicles/vehicles.controller';
+import { RentsController } from './modules/rents/rents.controller';
 
 @Module({
   imports: [VehiclesModule, RentsModule, UsersModule, AuthModule],
@@ -18,7 +20,9 @@ import { PrismaService } from './prisma/prisma.service';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoginMiddleware).forRoutes(VehiclesModule, RentsModule);
+    consumer
+      .apply(LoginMiddleware)
+      .forRoutes(VehiclesController, RentsController);
     consumer
       .apply(AdminMiddleware)
       .forRoutes({ path: 'vehicles', method: RequestMethod.POST });

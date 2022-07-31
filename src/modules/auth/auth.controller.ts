@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { loginSchema } from '../../schemas/LoginSchema';
 import { schemaValidator } from '../../utils/schemaValidator';
 import { AuthService } from './auth.service';
@@ -10,10 +16,19 @@ export class AuthController {
 
   @Post()
   async login(@Body() login: LoginDto) {
-    const body = schemaValidator(login, loginSchema) as LoginDto;
+    try {
+      const body = schemaValidator(login, loginSchema) as LoginDto;
 
-    const response = this.authService.login(body);
+      const token = await this.authService.login(body);
 
-    return response;
+      return { token };
+    } catch (err) {
+      throw new HttpException(
+        {
+          error: err.message,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

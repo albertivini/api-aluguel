@@ -1,4 +1,12 @@
-import { Controller, Param, Post, Put, Req } from '@nestjs/common';
+import {
+  Controller,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Req,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { RentsService } from './rents.service';
 
@@ -6,15 +14,38 @@ import { RentsService } from './rents.service';
 export class RentsController {
   constructor(private rentsService: RentsService) {}
 
-  @Post(':vehicle_id')
-  async create(@Param() vehicleId: string, @Req() request: Request) {
-    const { userId } = request;
-    await this.rentsService.create({ vehicleId, userId });
+  @Post(':vehicleId')
+  async create(@Req() request: Request) {
+    try {
+      const { userId } = request;
+
+      const { vehicleId } = request.params;
+
+      await this.rentsService.create({ vehicleId, userId });
+    } catch (err) {
+      throw new HttpException(
+        {
+          error: err.message,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  @Put(':vehicle_id')
-  async devolution(@Param() vehicleId: string, @Req() request: Request) {
-    const { userId } = request;
-    await this.rentsService.devolution({ vehicleId, userId });
+  @Put(':vehicleId')
+  async devolution(@Req() request: Request) {
+    try {
+      const { userId } = request;
+      const { vehicleId } = request.params;
+
+      await this.rentsService.devolution({ vehicleId, userId });
+    } catch (err) {
+      throw new HttpException(
+        {
+          error: err.message,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
