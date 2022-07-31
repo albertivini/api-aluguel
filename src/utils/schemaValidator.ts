@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import * as Joi from 'joi';
 
 export function schemaValidator(body: unknown, schema: Joi.ObjectSchema<any>) {
   const result = schema.validate(body);

@@ -1,17 +1,20 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { User } from 'src/modules/users/interfaces/User';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AdminMiddleware implements NestMiddleware {
-  private users: User[] = [];
-
-  use(req: Request, res: Response, next: NextFunction) {
+  constructor(private prisma: PrismaService) {}
+  async use(req: Request, res: Response, next: NextFunction) {
     const { userId } = req;
 
-    const user = this.users.find((user) => user.id === userId);
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
 
-    if (user.isAdmin) {
+    if (user?.isAdmin) {
       return next();
     }
 

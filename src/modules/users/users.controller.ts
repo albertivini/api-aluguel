@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { createUserSchema } from 'src/schemas/createUserSchema';
-import { schemaValidator } from 'src/utils/schemaValidator';
+import { createUserSchema } from '../../schemas/createUserSchema';
+import { schemaValidator } from '../../utils/schemaValidator';
 import { CreateUserDto } from './dtos/createUserDto';
 import { UsersService } from './users.service';
 
@@ -9,9 +9,9 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUser: CreateUserDto) {
+  async create(@Body() createUser: CreateUserDto) {
     const body = schemaValidator(createUser, createUserSchema) as CreateUserDto;
 
-    this.usersService.create(body);
+    await this.usersService.create(body);
   }
 }

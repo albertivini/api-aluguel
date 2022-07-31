@@ -1,25 +1,25 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateVehicleDto } from 'src/modules/vehicles/dtos/createVehicleDto';
+import { CreateVehicleDto } from './dtos/createVehicleDto';
 import { VehiclesService } from './vehicles.service';
-import { schemaValidator } from 'src/utils/schemaValidator';
-import { createVehicleSchema } from 'src/schemas/createVehicleSchema';
+import { schemaValidator } from '../../utils/schemaValidator';
+import { createVehicleSchema } from '../../schemas/createVehicleSchema';
 
 @Controller('vehicles')
 export class VehiclesController {
   constructor(private vehiclesService: VehiclesService) {}
   @Get()
-  findAll() {
-    const response = this.vehiclesService.findAll();
+  async findAll() {
+    const response = await this.vehiclesService.findAll();
     return response;
   }
 
   @Post()
-  create(@Body() createVehicle: CreateVehicleDto) {
+  async create(@Body() createVehicle: CreateVehicleDto) {
     const body = schemaValidator(
       createVehicle,
       createVehicleSchema,
     ) as CreateVehicleDto;
 
-    this.vehiclesService.create(body);
+    await this.vehiclesService.create(body);
   }
 }

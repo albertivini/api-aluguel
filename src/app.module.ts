@@ -10,9 +10,11 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { LoginMiddleware } from './middlewares/login.middleware';
 import { AdminMiddleware } from './middlewares/admin.middleware';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [VehiclesModule, RentsModule, UsersModule, AuthModule],
+  providers: [PrismaService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

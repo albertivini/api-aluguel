@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { Login } from './interfaces/Login';
 import bcrypt from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaService) {}
 
-  async login({ email, password }: Login) {
+  async login({ email, password }: Login): Promise<string> {
     const user = await this.prisma.user.findUnique({
       where: {
         email,

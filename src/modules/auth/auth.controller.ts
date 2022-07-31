@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { loginSchema } from 'src/schemas/LoginSchema';
-import { schemaValidator } from 'src/utils/schemaValidator';
+import { loginSchema } from '../../schemas/LoginSchema';
+import { schemaValidator } from '../../utils/schemaValidator';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/loginDto';
 
@@ -9,7 +9,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post()
-  login(@Body() login: LoginDto) {
+  async login(@Body() login: LoginDto) {
     const body = schemaValidator(login, loginSchema) as LoginDto;
 
     const response = this.authService.login(body);

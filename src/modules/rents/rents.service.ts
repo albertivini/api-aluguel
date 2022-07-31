@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from '../../prisma/prisma.service';
 import { Rent } from './interfaces/Rent';
 
 @Injectable()
 export class RentsService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaService) {}
 
   async create({ vehicleId, userId }: Rent): Promise<void> {
     const vehicle = await this.prisma.rental.findFirst({

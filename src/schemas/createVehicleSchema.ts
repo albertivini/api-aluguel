@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import * as Joi from 'joi';
 
 export const createVehicleSchema = Joi.object().keys({
   name: Joi.string().strict().trim().required(),

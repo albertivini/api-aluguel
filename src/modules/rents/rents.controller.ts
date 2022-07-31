@@ -7,14 +7,14 @@ export class RentsController {
   constructor(private rentsService: RentsService) {}
 
   @Post(':vehicle_id')
-  create(@Param() vehicleId: string, @Req() request: Request) {
+  async create(@Param() vehicleId: string, @Req() request: Request) {
     const { userId } = request;
-    this.rentsService.create({ vehicleId, userId });
+    await this.rentsService.create({ vehicleId, userId });
   }
 
   @Put(':vehicle_id')
-  devolution(@Param() vehicleId: string, @Req() request: Request) {
+  async devolution(@Param() vehicleId: string, @Req() request: Request) {
     const { userId } = request;
-    this.rentsService.devolution({ vehicleId, userId });
+    await this.rentsService.devolution({ vehicleId, userId });
   }
 }
