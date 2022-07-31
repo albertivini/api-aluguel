@@ -22,13 +22,18 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Production Endpoint
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- https://api-aluguel.herokuapp.com/
+
+## Swagger
+
+- https://api-aluguel.herokuapp.com/api
 
 ## Architecture
 
 <img src="arch.png">
+<p></p>
 
 ## Installation
 
@@ -47,8 +52,6 @@ $ npm run start
 $ docker-compose up -d
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
 ## Test
@@ -56,12 +59,6 @@ $ npm run start:prod
 ```bash
 # unit tests
 $ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## Support
