@@ -16,7 +16,6 @@ export class VehiclesService {
       data: {
         name,
         brand,
-        isRented: false,
       },
     });
   }

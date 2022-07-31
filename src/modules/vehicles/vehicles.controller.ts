@@ -10,10 +10,18 @@ import { CreateVehicleDto } from './dtos/createVehicleDto';
 import { VehiclesService } from './vehicles.service';
 import { schemaValidator } from '../../utils/schemaValidator';
 import { createVehicleSchema } from '../../schemas/createVehicleSchema';
+import { ApiHeader, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
+import { swaggerResponse } from 'src/constants/swaggerResponse';
 
+@ApiTags('vehicles')
 @Controller('vehicles')
 export class VehiclesController {
   constructor(private vehiclesService: VehiclesService) {}
+
+  @ApiHeader({
+    name: 'List Vehicles',
+    description: 'List all vehicles',
+  })
   @Get()
   async findAll() {
     try {
@@ -29,6 +37,10 @@ export class VehiclesController {
     }
   }
 
+  @ApiHeader({
+    name: 'Create vehicle',
+    description: 'Admin create vehicle',
+  })
   @Post()
   async create(@Body() createVehicle: CreateVehicleDto) {
     try {

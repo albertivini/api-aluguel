@@ -5,15 +5,22 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
+import { ApiTags, ApiHeader, ApiBadRequestResponse } from '@nestjs/swagger';
 import { createUserSchema } from '../../schemas/createUserSchema';
 import { schemaValidator } from '../../utils/schemaValidator';
 import { CreateUserDto } from './dtos/createUserDto';
 import { UsersService } from './users.service';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @ApiHeader({
+    name: 'User',
+    description: 'Create user',
+  })
+  @ApiBadRequestResponse()
   @Post()
   async create(@Body() createUser: CreateUserDto) {
     try {

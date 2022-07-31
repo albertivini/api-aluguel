@@ -25,7 +25,6 @@ model Vehicle {
   id       String   @id @default(uuid())
   name     String
   brand    String
-  isRented Boolean
   Rental   Rental[]
 
   @@map("vehicles")
